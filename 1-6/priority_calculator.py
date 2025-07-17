@@ -2,6 +2,24 @@
 def main():
   priority_calculator = (input("공백으로 구분하여 입력하세요 예 4 + 5 * 3 - 2: "))
   priority_calculator= priority_calculator.split(" ")
+  OperatorPlus = "+"
+  OperatorMinus= "-"
+
+  
+  priority_calculator = list(filter(None, priority_calculator))
+  # try:
+  #   priority_calculator= list(map(float, priority_calculator))
+  # except ValueError:
+  #     return print("Invalid number input.")
+
+  match priority_calculator:
+     case "+","-":
+        
+        
+        
+      
+  # if priority_calculator.sort():
+    
   Operator =  ['+', '-', '*', '/']
   parsed_tokens = []
 
@@ -23,8 +41,8 @@ def main():
             else:
                 # 숫자로 변환 시도 (float)
                 parsed_tokens.append(float(token))
-        # if parsed_tokens not in Operator:
-        #     return print("Invalid input.")
+        if parsed_tokens not in Operator:
+            return print("Invalid input.")
     # while priority_calculator[num]:
     
      
@@ -36,36 +54,8 @@ def main():
    
       
     
-#   NumFirst = int(NumFirst)
-#   NumSecond = int(NumSecond)
-#   Operator = input("Enter operator(+, -, *, /): ")
-  
-  
-  
-  
-  #finsh
 
   
-  
-  
- 
-#   if Operator not in ['+', '-', '*', '/']:    
-#     return print("Invalid operator.")
-  
-#   elif Operator == '+':
-#     result = add(NumFirst, NumSecond)
-#   elif Operator == '-':
-#     result = subtract(NumFirst, NumSecond)
-#   elif Operator == '*':
-#     result = multiply(NumFirst, NumSecond)
-#   elif Operator == '/':
-#     if NumSecond == 0:
-#       return print("Error: Division by zero.")
-#     result = divide(NumFirst, NumSecond)
-  
-#   print(f"Result:{result}")
-   return print(1)
-
 
 
 
