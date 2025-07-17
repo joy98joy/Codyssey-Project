@@ -1,7 +1,15 @@
 def main():
     num = input("숫자들을 공백으로 구분하여 입력하세요 (예: 3 9 1 4 2): ")
-    num = num.split(" ")    
-    num = list(map(float, num))
+    num = num.split(" ") 
+    num = list(filter(None, num))
+    try:
+        num = list(map(float, num))
+        
+         
+    except ValueError:
+        return print("Invalid input.")
+    
+    
     for i in range(len(num)-1):
         swap = False
         for index2 in range(len(num)-i-1):
