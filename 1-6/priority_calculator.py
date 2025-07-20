@@ -1,7 +1,7 @@
 
 def main():
-  priority_calculator = (input("공백으로 구분하여 입력하세요 예 4 + 5 * 3 - 2: "))
-  priority_calculator= priority_calculator.split(" ")
+  priority_calculator = ["+","-"]
+  # priority_calculator= priority_calculator.split(" ")
   OperatorPlus = "+"
   OperatorMinus= "-"
 
@@ -11,16 +11,27 @@ def main():
   #   priority_calculator= list(map(float, priority_calculator))
   # except ValueError:
   #     return print("Invalid number input.")
+  Operator =  ['+', '-', '*', '/']
 
-  match priority_calculator:
-     case "+","-":
+   
+
+    # 연속된 연산자 검사
+  # for i in range(len(priority_calculator) - 1):
+  #       if is_operator(priority_calculator[i]) and is_operator(priority_calculator[i+1]):
+  #           return print("Invalid input: 연속된 연산자가 있습니다.")
+        
+
+
+  
+        
+          
+          
         
         
         
       
   # if priority_calculator.sort():
     
-  Operator =  ['+', '-', '*', '/']
   parsed_tokens = []
 
   def add(NumFirst, NumSecond):
@@ -33,6 +44,12 @@ def main():
     if NumSecond == 0:
         raise ZeroDivisionError("Error: Division by zero")
     return NumFirst / NumSecond
+  # match priority_calculator:
+  #    case "+","-": 
+        
+  #    case "*","/":
+        
+        
   
   try:
         for token in priority_calculator:
@@ -41,16 +58,49 @@ def main():
             else:
                 # 숫자로 변환 시도 (float)
                 parsed_tokens.append(float(token))
-        if parsed_tokens not in Operator:
-            return print("Invalid input.")
+        # if parsed_tokens not in Operator:
+        #     return print("Invalid input.")
     # while priority_calculator[num]:
     
      
   except ValueError:
         return print("Invalid input.")
-  temp_tokens = []
+  #부호만 입력되면 반환
+  if all(x in Operator  for x in parsed_tokens):
+        return print("Invalid input.")
+ 
   i = 0
   while i < len(parsed_tokens):
+        match parsed_tokens[i]:
+            case '*':
+                result = multiply(parsed_tokens[i-1], parsed_tokens[i+1])
+                parsed_tokens[i-1:i+2] = [result]
+                i = 0 # 리스트 변경 후 다시 처음부터 검사
+            case '/':
+                result = divide(parsed_tokens[i-1], parsed_tokens[i+1])
+                parsed_tokens[i-1:i+2] = [result]
+                i = 0 # 리스트 변경 후 다시 처음부터 검사
+            case _: # 다른 경우 (숫자나 +, -)
+                i += 1
+  i=0
+  while i < len(parsed_tokens):
+        match parsed_tokens[i]:
+            case '+':
+                result = add(parsed_tokens[i-1], parsed_tokens[i+1])
+                parsed_tokens[i-1:i+2] = [result]
+                i = 0 # 리스트 변경 후 다시 처음부터 검사
+            case '-':
+                result = subtract(parsed_tokens[i-1], parsed_tokens[i+1])
+                parsed_tokens[i-1:i+2] = [result]
+                i = 0 # 리스트 변경 후 다시 처음부터 검사
+            case _: # 다른 경우 (숫자)
+                i += 1
+  try:
+    #공백이면 반환
+    result = parsed_tokens[0]
+  except IndexError:
+      return print("Invalid input.")
+  return print(f"Result: {result}")
    
       
     
