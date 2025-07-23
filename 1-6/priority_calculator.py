@@ -1,4 +1,3 @@
-
 def main():
   priority_calculator = (input("공백으로 구분하여 입력하세요 예 4 + 5 * 3 - 2: "))
   priority_calculator= priority_calculator.split(" ")
@@ -9,11 +8,10 @@ def main():
   OperatorMinus= "-"
 
   
-  priority_calculator = list(filter(None, priority_calculator))
  
 
-  match priority_calculator:
-     case "+","-":
+#   match priority_calculator:
+#      case "+","-":
         
         
         
@@ -22,7 +20,19 @@ def main():
     
   Operator =  ['+', '-', '*', '/']
   parsed_tokens = []
-
+  try:
+        for token in priority_calculator:
+            if token in Operator:
+                parsed_tokens.append(token)
+            else:
+                # 숫자로 변환 시도 (float)
+                parsed_tokens.append(float(token))
+        
+    # while priority_calculator[num]:
+    
+  except ValueError:
+    return print("Invalid input.")
+ 
   def add(NumFirst, NumSecond):
     return NumFirst + NumSecond
   def subtract(NumFirst, NumSecond):
@@ -31,43 +41,31 @@ def main():
     return NumFirst * NumSecond
   def divide(NumFirst, NumSecond):
     if NumSecond == 0:
-        raise ZeroDivisionError("Error: Division by zero")
+        raise ZeroDivisionError(" Error: Division by zero")
     return NumFirst / NumSecond
-  
-  try:
-        for token in priority_calculator:
-            if token in Operator:
-                parsed_tokens.append(token)
-            else:
-                # 숫자로 변환 시도 (float)
-                parsed_tokens.append(float(token))
-        if parsed_tokens not in Operator:
-            return print("Invalid input.")
-    # while priority_calculator[num]:
-    
-     
-  except ValueError:
-        return print("Invalid input.")
-  temp_tokens = []
   i = 0
   while i < len(parsed_tokens):
-   
-      
-    
-
-  
-
-
-
-'''
-calculator.py를 CLI에서 실행해서 사용자 입력 처리와 출력이 올바른지 확인한다.  
-계산기 프로그램은 주어진 4가지 연산자 (+, -, , /)에 대해 정상적으로 작동하며, 잘못된 입력이나 0으로 나누는 경우를 적절히 처리하고 있는가?  
-올바른 입력과 예외 상황에 대한 조건 분기와 출력에 대해 제대로 설명할 수 있는가?  
-각 연산 기능(add, subtract, multiply, divide)이 함수로 분리되어 있고, 사용자 입력 및 결과 출력이 요구사항대로 구성되어 있는가?  
-함수 정의, input() 사용, "Result: ..." 형식의 출력 등 코드에 대해 제대로 설명할 수 있는가?  
-코드는 calculator.py라는 파일에 작성되었으며, 실행 가능한 상태로 구조(진입점 포함)가 잘 구성되어 있는가?
-→ 파일명, if __name__ == "__main__": 구문, 실행 시 오류 없이 동작하는지 확인한다.'''
-
-
-if __name__ == "__main__":
-    main()
+    if parsed_tokens[i] == '*':
+      result = multiply(parsed_tokens[i-1], parsed_tokens[i+1])
+      parsed_tokens[i-1:i+2] = [result]
+      # 리스트가 변경되었으므로 처음부터 다시 스캔
+      i = 0
+    elif parsed_tokens[i] == '/':
+      # 연산자 앞뒤의 숫자로 나눗셈 수행
+      result = divide(parsed_tokens[i-1], parsed_tokens[i+1])
+      # [숫자, '/', 숫자] 부분을 계산 결과로 대체
+      parsed_tokens[i-1:i+2] = [result]
+      i = 0
+    else:
+      i += 1
+  final_result = parsed_tokens[0]
+  # 남은 덧셈/뺄셈을 순서대로 계산
+  for i in range(1, len(parsed_tokens), 2):
+    operator = parsed_tokens[i]
+    next_number = parsed_tokens[i+1]
+    if operator == '+':
+      final_result = add(final_result, next_number)
+    elif operator == '-':
+      final_result = subtract(final_result, next_number)
+     
+main()
